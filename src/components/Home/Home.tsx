@@ -118,7 +118,7 @@ export default function Home() {
     const instructionsModalContent = (
         <div className="text-center">
             <p>Tenés que escanear el QR de tu DNI:</p>
-            <img src="/images/dni.png" className="mx-auto my-4" />
+            <img src="/images/dni.webp" className="mx-auto my-4" />
             <button
                 onClick={handleModalAccept}
                 className="px-4 py-2 m-2 bg-green-600 text-white rounded"
@@ -152,7 +152,7 @@ export default function Home() {
             {element || (
                 <>
                     <p>Error al escanear el DNI. Asegurese que el QR se vea bien.</p>
-                    <img src="/images/dni.png" className="mx-auto my-4" />
+                    <img src="/images/dni.webp" className="mx-auto my-4" />
                 </>
             )}
             <button

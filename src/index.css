@@ -37,7 +37,7 @@ html, body, #root {
 :root {
     background-color: rgba(0, 0, 0, .3);
     background-blend-mode: darken;
-    background-image: url(/images/background.jpg);
+    background-image: url(/images/background.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
