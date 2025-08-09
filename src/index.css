@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Abril Fatface';
+    src: url(../src/assets/fonts/AbrilFatface-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Vintage';
+    src: url(../src/assets/fonts/VintageKing.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Limelight';
+    src: url(../src/assets/fonts/Limelight-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Caprasimo';
+    src: url(../src/assets/fonts/Caprasimo-Regular.ttf) format('truetype');
+}
+
+
+@theme {
+    --font-abril-fatface: Abril Fatface;
+    --font-vintage: Vintage;
+    --font-limelight: Limelight;
+    --font-Caprasimo: Caprasimo;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+:root {
+    background-color: rgba(0, 0, 0, .3);
+    background-blend-mode: darken;
+    background-image: url(/images/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment:fixed;
+    color: white;
+}
+
+.loader {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 2px solid #FFF;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  .loader::after {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-bottom: 2px solid #d20000;
+    border-left: 4px solid transparent;
+  }
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+
+
