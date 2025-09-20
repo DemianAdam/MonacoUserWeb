@@ -16,6 +16,10 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false);
     const scannerRef = useRef<Html5Qrcode | null>(null);
     const readerRef = useRef<HTMLDivElement | null>(null);
+    const [isOnThirdParty, setIsOnThirdParty] = useState(false);
+    const isIOS =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
     // Show modal first
     const handleClickCameraScanner = () => {
@@ -70,6 +74,15 @@ export default function Home() {
         }
     }
 
+    useEffect(() => {
+        const ua = navigator.userAgent.toLowerCase();
+        const isInstagram = ua.includes("instagram");
+        const isFacebook = ua.includes("fb");
+        const isMessenger = ua.includes("messenger");
+        if (isInstagram || isFacebook || isMessenger) {
+            setIsOnThirdParty(true);
+        }
+    });
     // Scanner initialization
     useEffect(() => {
         const run = async () => {
@@ -181,25 +194,52 @@ export default function Home() {
 
     return (
         <div className="flex flex-col border bg-black/15 border-black/30 shadow-md shadow-black rounded-2xl p-5 text-white h-[95%] mx-5 justify-center">
+
+
             <div className="flex flex-col h-full py-5 items-center font-serif text-center font-[10]">
-                <h2 className="text-3xl mb-5 tracking-wide">¡Bienvenido a Mónaco!</h2>
-                <div className="flex mt-7 flex-col items-center justify-between">
-                    <p className="text-md mb-7 tracking-normal">
-                        Escaneá tu DNI para sumarte a nuestra lista!
+                {!isOnThirdParty ? <>
+                    <h2 className="text-3xl mb-5 tracking-wide">¡Bienvenido a Mónaco!</h2>
+                    <div className="flex mt-7 flex-col items-center justify-between">
+                        <p className="text-md mb-7 tracking-normal">
+                            Escaneá tu DNI para sumarte a nuestra lista!
+                        </p>
+
+                        {cameraScanning && <div id="reader" ref={readerRef} className="w-full h-full"></div>}
+
+                        {isLoading && <div className="loader"></div>}
+
+                        {!cameraScanning && !isLoading && scanButtons}
+
+                        <div id="file-reader" className="hidden" />
+                    </div>
+                    <p className="mt-auto text-sm text-gray-500">
+                        Asegúrate de que tu cámara esté habilitada y el DNI sea legible.
                     </p>
-
-                    {cameraScanning && <div id="reader" ref={readerRef} className="w-full h-full"></div>}
-
-                    {isLoading && <div className="loader"></div>}
-
-                    {!cameraScanning && !isLoading && scanButtons}
-
-                    <div id="file-reader" className="hidden" />
-                </div>
-                <p className="mt-auto text-sm text-gray-500">
-                    Asegúrate de que tu cámara esté habilitada y el DNI sea legible.
-                </p>
+                </>
+                    :
+                    <>
+                    <h2 className="text-3xl mb-5 tracking-wide">Ingresa desde tu navegador</h2>
+                        {
+                            !isIOS ?
+                                <>
+                                    <p>¡Hace click en el enlace y despues en continuar!</p>
+                                </>
+                                :
+                                <>
+                                    <p>¡Mantené apretado y hace click en "Abrir Enlace"!</p>
+                                </>
+                        }
+                        
+                        <a href={location.href} target='_blank' download className="mt-15 text-2xl underline text-blue-400">www.MonacoMina.com.ar</a>
+                        <div className="flex justify-center mt-auto gap-10">
+                            <img className="h-10" src="/images/logo-chrome.webp" alt="" />
+                            <img className="h-10" src="/images/logo-google.webp" alt="" />
+                            <img className="h-10" src="/images/logo-safari.webp" alt="" />
+                        </div>
+                    </>
+                }
             </div>
+
         </div>
     );
 }

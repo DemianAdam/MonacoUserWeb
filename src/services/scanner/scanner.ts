@@ -78,6 +78,7 @@ export async function startScanner({
                     videoConstraints: {
                         advanced: [{ focusMode: "continuous" }, { facingMode: "environment" }], // autofocus
                     },
+
                 },
                 async (decodedText: string, decodedResult: Html5QrcodeResult) => {
                     await stopAndCleanUp();
@@ -95,8 +96,9 @@ export async function startScanner({
 
             // ✅ Try to "kick" autofocus again after 2 seconds
             setTimeout(async () => {
+                let stream: MediaStream | null = null;
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({
+                    stream = await navigator.mediaDevices.getUserMedia({
                         video: { facingMode: "environment" },
                     });
                     const track = stream.getVideoTracks()[0];
@@ -109,6 +111,11 @@ export async function startScanner({
                     });
                 } catch (err) {
                     console.warn("Failed to reapply focus:", err);
+                }
+                finally {
+                    if (stream) {
+                        stream.getTracks().forEach((t) => t.stop()); // ✅ release camera
+                    }
                 }
             }, 2000);
 
