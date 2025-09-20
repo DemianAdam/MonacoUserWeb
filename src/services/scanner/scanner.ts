@@ -76,7 +76,7 @@ export async function startScanner({
                     qrbox: { width: 250, height: 100 },
                     aspectRatio: 9 / 16,
                     videoConstraints: {
-                        advanced: [{ focusMode: "continuous" }, { facingMode: "environment" }], // autofocus
+                        advanced: [{ focusMode: "continuous" }, { facingMode: "environment" }, { zoom: 3 }], // autofocus
                     },
 
                 },
